@@ -1,7 +1,5 @@
-# INFO
+### Name
+Template
 
-Template info
-
-## Data
-
+### Data
 Data collected from [source](https://www.reddit.com)

@@ -2,16 +2,16 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-2 p-3 mb-2 bg-dark text-white">
-      <h1>Datasets</h1>
+    <div class="col-2 p-3 mb-2 bg-dark text-white border border-success">
+      <h2>Datasets</h2>
       <ul id="mydatasets">
         <% datasetsList.forEach(function(d){ %>
           <li><a href="/dataset/<%= d %>"><%= d %></a></li>
         <% }) %>
       </ul>
     </div>
-    <div class="col p-3 mb-2 bg-dark text-white">
-      <h1>Table</h1>
+    <div class="col p-3 mb-2 bg-dark text-white border border-success">
+      <h2>Table</h2>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -39,8 +39,9 @@
       </table>
       
     </div>
-    <div class="col p-3 mb-2 bg-dark text-white">
-      <h1> <%- myhtml %></h1>
+    <div class="col p-3 mb-2 bg-dark text-white border border-success">
+      <h2>Info</h2>
+      <h2> <%- myhtml %></h2>
     </div>
   </div>
 </div>

@@ -34,7 +34,9 @@ app.get('/dataset/:hg', function(req, res){
 
   hgName = req.params.hg
   // Convert the Markdown file content to HTML with markdown-it
-  const post = matter.read(__dirname + "/datasets/" + hgName + "/info.md")
+  // const post = matter.read(__dirname + "/datasets/" + hgName + "/info.md")
+  const myPath = path.join(__dirname, '/datasets/')
+  const post = matter.read("./" + myPath + hgName + "/info.md")
   const md = require("markdown-it")({ html: true }) 
   const content = post.content 
   const mdRendered = md.render(content) // this is the HTML result
