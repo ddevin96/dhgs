@@ -1,11 +1,52 @@
-const http = require('http');
-const hostname = '127.0.0.1';
-const port = 3000;
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
+const express = require('express')
+const path = require('path')
+const app = express()
+const port = 3000
+const matter = require("gray-matter")
+
+app.engine('.html', require('ejs').__express);
+
+// Optional since express defaults to CWD/views
+app.set('views', path.join(__dirname, 'views'));
+
+// Path to our public directory
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'datasets')));
+
+// Without this you would need to
+// supply the extension to res.render()
+// ex: res.render('users.html').
+app.set('view engine', 'html');
+
+const utils = require('./utils');
+
+
+app.get('/', function(req, res){
+  res.render('index', {
+    title: "Home",
+    header: "Hypergraphs Dataset"
+  });
 });
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+
+app.get('/dataset/:hg', function(req, res){
+  // iterate through the datasets folder and get the list of datasets
+  const d = utils.getDatasets()
+
+  hgName = req.params.hg
+  // Convert the Markdown file content to HTML with markdown-it
+  const post = matter.read(__dirname + "/datasets/" + hgName + "/info.md")
+  const md = require("markdown-it")({ html: true }) 
+  const content = post.content 
+  const mdRendered = md.render(content) // this is the HTML result
+
+  res.render('datasets', {
+    title: "Datasets",
+    header: "Hypergraphs Dataset",
+    myhtml: mdRendered,
+    datasetsList: d
+  });
 });
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})

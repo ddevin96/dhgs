@@ -1,0 +1,49 @@
+<%- include('header.html') -%>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2 p-3 mb-2 bg-dark text-white">
+      <h1>Datasets</h1>
+      <ul id="mydatasets">
+        <% datasetsList.forEach(function(d){ %>
+          <li><a href="/dataset/<%= d %>"><%= d %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="col p-3 mb-2 bg-dark text-white">
+      <h1>Table</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Second</th>
+            <th scope="col">Third</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>one</td>
+            <td>two</td>
+            <td>three</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>one</td>
+            <td>two</td>
+            <td>three</td>
+          </tr>
+        </tbody>
+
+      </table>
+      
+    </div>
+    <div class="col p-3 mb-2 bg-dark text-white">
+      <h1> <%- myhtml %></h1>
+    </div>
+  </div>
+</div>
+
+
+<%- include('footer.html') -%>
