@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const fs = require('fs')
 const app = express()
 const port = 3000
 const matter = require("gray-matter")
@@ -30,11 +31,13 @@ app.get('/', function(req, res){
 
 app.get('/list', function(req, res){
   const d = utils.getDatasets()
+  const sizes = utils.getSizeDatasets()
 
   res.render('list', {
     title: "DHGS",
     header: "Hypergraphs Dataset",
-    datasetsList: d
+    datasetsList: d,
+    datasetsListSize: sizes
   });
 });
 
@@ -58,6 +61,22 @@ app.get('/dataset/:hg', function(req, res){
     datasetsList: d
   });
 });
+
+// /files/* is accessed via req.params[0]
+// but here we name it :file
+app.get('/dataset/:hg/:file', function(req, res, next){
+  hgName = req.params.hg
+  fileName = req.params.file
+  var mypath = path.join(__dirname, "/datasets/", hgName, fileName)
+  res.download(mypath, function (err) {
+    if (!err) return; // file sent
+    if (err.status !== 404) return next(err); // non-404 error
+    // file for download not found
+    res.statusCode = 404;
+    res.send('Cant find that file, sorry!');
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

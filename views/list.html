@@ -10,7 +10,9 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Uploader</th>
-            <th scope="col">Date</th>
+            <th scope="col">Last Update</th>
+            <th scope="col">Download</th>
+            <th scope="col">Size</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +22,8 @@
               <td><a href="/dataset/<%= d %>"><%= d %></a></td>
               <td>ddevin</td>
               <td>today</td>
+              <td><a href="/dataset/<%= d %>/<%= d %>.hg">Link</a></td>
+              <td><%= datasetsListSize[i-1] %> MB</td>
             </tr>
             <% i++; %>
           <% }) %>
