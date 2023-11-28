@@ -1,0 +1,33 @@
+<%- include('header.html') -%>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col p-3 mb-2 bg-dark text-white border border-success">
+      <h2>Table</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Uploader</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var i=1; datasetsList.forEach(function(d){ %>
+            <tr>
+              <th scope="row"><%= i %></th>
+              <td><a href="/dataset/<%= d %>"><%= d %></a></td>
+              <td>ddevin</td>
+              <td>today</td>
+            </tr>
+            <% i++; %>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<%- include('footer.html') -%>

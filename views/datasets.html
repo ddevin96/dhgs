@@ -4,11 +4,11 @@
   <div class="row">
     <div class="col-2 p-3 mb-2 bg-dark text-white border border-success">
       <h2>Datasets</h2>
-      <ul id="mydatasets">
+      <ol id="mydatasets">
         <% datasetsList.forEach(function(d){ %>
           <li><a href="/dataset/<%= d %>"><%= d %></a></li>
         <% }) %>
-      </ul>
+      </ol>
     </div>
     <div class="col p-3 mb-2 bg-dark text-white border border-success">
       <h2>Table</h2>

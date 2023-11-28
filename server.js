@@ -23,8 +23,18 @@ const utils = require('./utils');
 
 app.get('/', function(req, res){
   res.render('index', {
-    title: "Home",
+    title: "DHGS",
     header: "Hypergraphs Dataset"
+  });
+});
+
+app.get('/list', function(req, res){
+  const d = utils.getDatasets()
+
+  res.render('list', {
+    title: "DHGS",
+    header: "Hypergraphs Dataset",
+    datasetsList: d
   });
 });
 
@@ -42,7 +52,7 @@ app.get('/dataset/:hg', function(req, res){
   const mdRendered = md.render(content) // this is the HTML result
 
   res.render('datasets', {
-    title: "Datasets",
+    title: "DHGS",
     header: "Hypergraphs Dataset",
     myhtml: mdRendered,
     datasetsList: d
