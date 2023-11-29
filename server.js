@@ -50,6 +50,7 @@ async function run(sources, infos, res) {
 
   for (const apiCall of fulfilled) {
     url = apiCall.value.config.url
+    console.log(url)
     s = url.split("/")
     nameHG = s[s.length - 2]
     const result = infos.filter(info => info.nameHG == nameHG)

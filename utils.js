@@ -33,7 +33,7 @@ module.exports = {
       }
     },
     getInfos: function () {
-      const axios = require('axios');
+      // const axios = require('axios');
 
       infosJSON = []
       // jsonSample = {
