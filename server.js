@@ -44,7 +44,7 @@ app.get('/list', function(req, res){
 
 async function run(sources, infos, res) {
   const axios = require('axios');
-  const tasks = sources.map(source => axios.get(source));
+  const tasks = sources.map(source => axios.get(source, { withCredentials: true }));
   const results = await Promise.allSettled(tasks);
   const fulfilled = results.filter(result => result.status === 'fulfilled');
 
