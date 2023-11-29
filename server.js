@@ -32,18 +32,6 @@ app.get('/', function(req, res){
   });
 });
 
-// app.get('/list', function(req, res){
-//   const d = utils.getDatasets()
-//   const sizes = utils.getSizeDatasets()
-
-//   res.render('list', {
-//     title: "DHGS",
-//     header: "Hypergraphs Dataset",
-//     datasetsList: d,
-//     datasetsListSize: sizes
-//   });
-// });
-
 app.get('/list', function(req, res){
   const infos = utils.getInfos()
   sources = []
@@ -65,7 +53,7 @@ async function run(sources, infos, res) {
     s = url.split("/")
     nameHG = s[s.length - 2]
     const result = infos.filter(info => info.nameHG == nameHG)
-    console.log(result)
+    // console.log(result)
     /*
     date = apiCall.value.data[apiCall.value.data.length - 1].commit.author.date
     date = date.split("T")

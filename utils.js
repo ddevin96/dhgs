@@ -75,7 +75,7 @@ module.exports = {
             }
           }
         }
-        console.log(infosJSON);
+        // console.log(infosJSON);
         return infosJSON
       } catch (err) {
         console.log(err.message);
