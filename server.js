@@ -4,6 +4,9 @@ const fs = require('fs')
 const app = express()
 const port = 3000
 const matter = require("gray-matter")
+const axios = require('axios');
+
+require('dotenv').config()
 
 app.engine('.html', require('ejs').__express);
 
@@ -29,22 +32,61 @@ app.get('/', function(req, res){
   });
 });
 
-app.get('/list', function(req, res){
-  const d = utils.getDatasets()
-  const sizes = utils.getSizeDatasets()
+// app.get('/list', function(req, res){
+//   const d = utils.getDatasets()
+//   const sizes = utils.getSizeDatasets()
 
-  res.render('list', {
+//   res.render('list', {
+//     title: "DHGS",
+//     header: "Hypergraphs Dataset",
+//     datasetsList: d,
+//     datasetsListSize: sizes
+//   });
+// });
+
+app.get('/list', function(req, res){
+  const infos = utils.getInfos()
+  sources = []
+  for (const info of infos) {
+    apiCall = "https://api.github.com/repos/ddevin96/dhgs/commits?path=datasets/" + info.nameHG + "/info.md"
+    sources.push(apiCall)
+  }
+  run(sources, infos, res)
+});
+
+async function run(sources, infos, res) {
+  const axios = require('axios');
+  const tasks = sources.map(source => axios.get(source));
+  const results = await Promise.allSettled(tasks);
+  const fulfilled = results.filter(result => result.status === 'fulfilled');
+
+  for (const apiCall of fulfilled) {
+    url = apiCall.value.config.url
+    s = url.split("/")
+    nameHG = s[s.length - 2]
+    const result = infos.filter(info => info.nameHG == nameHG)
+    console.log(result)
+    /*
+    date = apiCall.value.data[apiCall.value.data.length - 1].commit.author.date
+    date = date.split("T")
+    date = date[0] + " " + date[1].split("Z")[0]
+    */
+    result[0].dateUpload = apiCall.value.data[apiCall.value.data.length - 1].commit.author.date
+    result[0].uploader = apiCall.value.data[apiCall.value.data.length - 1].commit.author.name
+    result[0].dateLastUpdate = apiCall.value.data[0].commit.author.date
+  }
+
+  res.render('infoDataset', {
     title: "DHGS",
     header: "Hypergraphs Dataset",
-    datasetsList: d,
-    datasetsListSize: sizes
+    infos: infos
   });
-});
+}
+
 
 app.get('/dataset/:hg', function(req, res){
   // iterate through the datasets folder and get the list of datasets
   const d = utils.getDatasets()
-
   hgName = req.params.hg
   // Convert the Markdown file content to HTML with markdown-it
   const post = matter.read(__dirname + "/datasets/" + hgName + "/info.md")
