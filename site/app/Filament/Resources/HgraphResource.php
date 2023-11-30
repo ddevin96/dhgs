@@ -10,12 +10,21 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components;
+use Filament\Infolists\Components\Tabs;
+use Filament\Forms\Components\Textarea;
+use Filament\Infolists\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\Group;
+use Filament\Infolists\Components\Split;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs\Tab;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use App\Filament\Resources\HgraphResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\HgraphResource\RelationManagers;
-use Filament\Infolists\Components\Tabs;
+
 class HgraphResource extends Resource
 {
     protected static ?string $model = Hgraph::class;
@@ -61,11 +70,36 @@ class HgraphResource extends Resource
                 ->tabs([
                     Tabs\Tab::make('Graph data')
                     ->schema([
-                        Infolists\Components\TextEntry::make('name')
-                        ]),
-                    Tabs\Tab::make('README.md')
+                        Components\Section::make()
                         ->schema([
-                            ViewEntry::make('description')->view('filament.infolists.markdown')
+                            Infolists\Components\TextEntry::make('name'),
+                            Infolists\Components\TextEntry::make('category')
+                                ->badge()
+                            ]),
+                        Components\Section::make()
+                            ->schema([
+                                Components\Grid::make(2)
+                                ->schema([
+                                    Components\Group::make([
+                                        Infolists\Components\TextEntry::make('nodes')->label('# Nodes'),
+                                        Infolists\Components\TextEntry::make('edges')->label('# Edges'),
+                                    ]),
+                                    Components\Group::make([
+                                        Infolists\Components\TextEntry::make('dnodemax')->label('Node degree max'),
+                                        Infolists\Components\TextEntry::make('dedgemax')->label('Edge degree max'),
+                                        Infolists\Components\TextEntry::make('dnodeavg')->label('Node degree avg'),
+                                        Infolists\Components\TextEntry::make('dedgeavg')->label('Edge degree avg'),
+                                    ]),
+                                ]),
+                                
+                            ]),
+                        Components\Section::make()
+                            ->schema([
+                                Infolists\Components\TextEntry::make('')->default('Distribution of edges by degree')->columnSpanFull(),
+                                ViewEntry::make('description')->view('filament.infolists.markdown')
+                            ])
+                       
+                       
                         ]),
                     Tabs\Tab::make('Statistics')
                         ->schema([
