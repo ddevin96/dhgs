@@ -72,10 +72,19 @@ class HgraphResource extends Resource
                     ->schema([
                         Components\Section::make()
                         ->schema([
-                            Infolists\Components\TextEntry::make('name'),
-                            Infolists\Components\TextEntry::make('category')
-                                ->badge()
-                            ]),
+                            Components\Grid::make(2)
+                            ->schema([
+                                Components\Group::make([
+                                    Infolists\Components\TextEntry::make('name'),
+                                    Infolists\Components\TextEntry::make('category')->badge()->color('danger')
+                                   
+                                ]),
+                                Components\Group::make([
+                                    Infolists\Components\TextEntry::make('created_at')->badge()->color('primary'),
+                                    Infolists\Components\TextEntry::make('updated_at')->badge()->color('success')
+                                ])
+                           
+                            ])]),
                         Components\Section::make()
                             ->schema([
                                 Components\Grid::make(2)
@@ -95,7 +104,7 @@ class HgraphResource extends Resource
                             ]),
                         Components\Section::make()
                             ->schema([
-                                Infolists\Components\TextEntry::make('')->default('Distribution of edges by degree')->columnSpanFull(),
+                                Infolists\Components\TextEntry::make('')->default('README.md')->columnSpanFull(),
                                 ViewEntry::make('description')->view('filament.infolists.markdown')
                             ])
                        
@@ -127,6 +136,7 @@ class HgraphResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category')
+                    ->badge()->color('danger')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nodes')
                     ->numeric()
