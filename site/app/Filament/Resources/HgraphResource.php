@@ -57,6 +57,7 @@ class HgraphResource extends Resource
             ->schema([
                 Tabs::make('Tabs')
                 ->columnSpan('full')
+                ->persistTabInQueryString()
                 ->tabs([
                     Tabs\Tab::make('Graph data')
                     ->schema([
@@ -68,7 +69,10 @@ class HgraphResource extends Resource
                         ]),
                     Tabs\Tab::make('Statistics')
                         ->schema([
-                            ViewEntry::make('dnodes')->view('filament.infolists.chart-line')
+                            Infolists\Components\TextEntry::make('')->default('Distribution of nodes by degree')->columnSpanFull(),
+                            ViewEntry::make('dnodes')->view('filament.infolists.chart-line')->columnSpanFull(),
+                            Infolists\Components\TextEntry::make('')->default('Distribution of edges by degree')->columnSpanFull(),
+                            ViewEntry::make('dedges')->view('filament.infolists.chart-line')->columnSpanFull(),
                         ]),
                     Tabs\Tab::make('Download')
                         ->schema([
@@ -76,7 +80,6 @@ class HgraphResource extends Resource
                         ]),
                    
                 ])
-               
                
                 // Infolists\Components\TextEntry::make('email'),
                 // Infolists\Components\TextEntry::make('notes')
