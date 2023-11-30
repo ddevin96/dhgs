@@ -22,35 +22,35 @@ class HgraphResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    // public static function form(Form $form): Form
-    // {
-    //     return $form
-    //         ->schema([
-    //             Forms\Components\TextInput::make('name')
-    //                 ->required()
-    //                 ->maxLength(255),
-    //             Forms\Components\TextInput::make('category')
-    //                 ->maxLength(255),
-    //             Forms\Components\Textarea::make('description')
-    //                 ->columnSpanFull(),
-    //             Forms\Components\TextInput::make('nodes')
-    //                 ->numeric(),
-    //             Forms\Components\TextInput::make('edges')
-    //                 ->numeric(),
-    //             Forms\Components\TextInput::make('dnodemax')
-    //                 ->numeric(),
-    //             Forms\Components\TextInput::make('dedgemax')
-    //                 ->numeric(),
-    //             Forms\Components\TextInput::make('dnodeavg')
-    //                 ->numeric(),
-    //             Forms\Components\TextInput::make('dedgeavg')
-    //                 ->numeric(),
-    //             Forms\Components\Textarea::make('dnodes')
-    //                 ->columnSpanFull(),
-    //             Forms\Components\Textarea::make('dedges')
-    //                 ->columnSpanFull(),
-    //         ]);
-    // }
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('category')
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('nodes')
+                    ->numeric(),
+                Forms\Components\TextInput::make('edges')
+                    ->numeric(),
+                Forms\Components\TextInput::make('dnodemax')
+                    ->numeric(),
+                Forms\Components\TextInput::make('dedgemax')
+                    ->numeric(),
+                Forms\Components\TextInput::make('dnodeavg')
+                    ->numeric(),
+                Forms\Components\TextInput::make('dedgeavg')
+                    ->numeric(),
+                Forms\Components\Textarea::make('dnodes')
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('dedges')
+                    ->columnSpanFull(),
+            ]);
+    }
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -61,6 +61,10 @@ class HgraphResource extends Resource
                     Tabs\Tab::make('Graph data')
                     ->schema([
                         Infolists\Components\TextEntry::make('name')
+                        ]),
+                    Tabs\Tab::make('README.md')
+                        ->schema([
+                            ViewEntry::make('description')->view('filament.infolists.markdown')
                         ]),
                     Tabs\Tab::make('Statistics')
                         ->schema([
