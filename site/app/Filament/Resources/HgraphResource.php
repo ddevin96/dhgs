@@ -11,9 +11,9 @@ use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Infolists\Components;
-use Filament\Infolists\Components\Tabs;
 use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\Split;
@@ -22,8 +22,10 @@ use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use App\Filament\Resources\HgraphResource\Pages;
+use Filament\Infolists\Components\Actions\Action;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\HgraphResource\RelationManagers;
+use Filament\Infolists\Components\Actions;
 
 class HgraphResource extends Resource
 {
@@ -82,7 +84,10 @@ class HgraphResource extends Resource
                                 Components\Group::make([
                                     Infolists\Components\TextEntry::make('created_at')->badge()->color('primary'),
                                     Infolists\Components\TextEntry::make('updated_at')->badge()->color('success')
-                                ])
+                                ]),
+                                // Action::make('star')
+                                // ->icon('heroicon-m-star')
+                                // ,
                            
                             ])]),
                         Components\Section::make()
@@ -116,11 +121,11 @@ class HgraphResource extends Resource
                             ViewEntry::make('dnodes')->view('filament.infolists.chart-line')->columnSpanFull(),
                             Infolists\Components\TextEntry::make('')->default('Distribution of edges by degree')->columnSpanFull(),
                             ViewEntry::make('dedges')->view('filament.infolists.chart-line')->columnSpanFull(),
-                        ]),
-                    Tabs\Tab::make('Download')
-                        ->schema([
-                            Infolists\Components\TextEntry::make('name')
-                        ]),
+                        ])
+                    // Tabs\Tab::make('Download')
+                    //     ->schema([
+                    //         Infolists\Components\TextEntry::make('name')
+                    //     ]),
                    
                 ])
                
