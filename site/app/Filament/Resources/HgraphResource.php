@@ -33,6 +33,8 @@ class HgraphResource extends Resource
 
     public static ?string $navigationLabel = 'Hypergraphs';
 
+    public static ?string $pluralLabel = 'Hypergraphs';
+
 
     public static function form(Form $form): Form
     {
