@@ -26,6 +26,13 @@ class StatsOverviewWidget extends BaseWidget
         $max_created_at = DB::table('hgraphs')->max('created_at');
         //get unique category 
         $categories = Hgraph::query()->select('category')->distinct()->get();
+        $values = [];
+        foreach ($categories as $product) {
+            foreach(explode(',', $product->category) as $value) {
+                $values[] = trim($value);
+                }
+        }
+        $values = array_unique($values);
 
         $hraphs_chart = Trend::model(Hgraph::class)
         ->between(
@@ -45,7 +52,7 @@ class StatsOverviewWidget extends BaseWidget
                     ->map(fn (TrendValue $value) => $value->aggregate)
                     ->toArray()
             ),
-            Stat::make('ncategories', $categories->count())
+            Stat::make('ncategories', count($values))
             ->icon('heroicon-o-eye')
             ->label('Number of categories')
             

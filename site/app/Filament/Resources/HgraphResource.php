@@ -52,9 +52,12 @@ class HgraphResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('category')
-                    ->maxLength(255),
+                // Forms\Components\TextInput::make('category')
+                // ->multiple()
+                //     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                ->label('README.md')
+                ->rows(20)
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('nodes')
                     ->numeric(),
@@ -90,7 +93,7 @@ class HgraphResource extends Resource
                             ->schema([
                                 Components\Group::make([
                                     Infolists\Components\TextEntry::make('name'),
-                                    Infolists\Components\TextEntry::make('category')->badge()->color('danger')
+                                    Infolists\Components\TextEntry::make('category')->badge()->color('danger') ->separator(',')
                                    
                                 ]),
                                 Components\Group::make([
@@ -153,6 +156,7 @@ class HgraphResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category')
+                    ->separator(',')
                     ->badge()->color('danger')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nodes')
@@ -161,19 +165,24 @@ class HgraphResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('edges')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('dnodemax')
                     ->numeric()
                     ->label('Degree Node Max')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('dedgemax')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('dnodeavg')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('dedgeavg')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

@@ -23,5 +23,5 @@ class Hgraph extends Model
        'dnodes',
        'dedges'
     ];
-
+   
 }

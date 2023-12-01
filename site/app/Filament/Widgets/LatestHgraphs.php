@@ -60,6 +60,7 @@ class LatestHgraphs extends BaseWidget
             ->searchable(),
             Tables\Columns\TextColumn::make('category')
                 ->badge()->color('danger')
+                ->separator(',')
                 ->searchable(),
             Tables\Columns\TextColumn::make('nodes')
                 ->numeric()
