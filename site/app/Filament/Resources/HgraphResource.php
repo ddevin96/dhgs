@@ -13,31 +13,15 @@ use Filament\Resources\Resource;
 use Filament\Infolists\Components;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Textarea;
-use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Tabs;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\Group;
-use Filament\Infolists\Components\Split;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Infolists\Components\Actions;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\Tabs\Tab;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\HgraphResource\Pages;
-use Filament\Infolists\Components\Actions\Action;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\HgraphResource\Pages\EditHgraph;
-use App\Filament\Resources\HgraphResource\Pages\ViewHgraph;
-use App\Filament\Resources\HgraphResource\RelationManagers;
-use App\Filament\Resources\HgraphResource\Pages\ListHgraphs;
-use App\Filament\Resources\HgraphResource\Pages\CreateHgraph;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+
 
 class HgraphResource extends Resource
 {
@@ -90,9 +74,11 @@ class HgraphResource extends Resource
                         Components\Section::make()
                         ->key('section1')
                         ->headerActions([
-                            Action::make('download')
+                            \Filament\Infolists\Components\Actions\Action::make('download')
                                 ->color('success')
-                                ->action(function ($record, Action $action) {
+                                ->label('Download')
+                                ->icon('heroicon-o-arrow-down-tray')
+                                ->action(function ($record,  \Filament\Infolists\Components\Actions\Action $action) {
                                     redirect()->to($record->url);
                                 })
                                 // ->action(function () {
@@ -169,7 +155,8 @@ class HgraphResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category')
                     ->separator(',')
-                    ->badge()->color('danger')
+                    ->badge()
+                    ->color('danger')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nodes')
                     ->numeric()
@@ -239,8 +226,15 @@ class HgraphResource extends Resource
                 })
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                Tables\Actions\Action::make('download')
+                                ->label('Download')
+                                ->icon('heroicon-o-arrow-down-tray')
+                                ->color('success')
+                                ->action(function ($record, Tables\Actions\Action $action) {
+                                    redirect()->to($record->url);
+                                })
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
