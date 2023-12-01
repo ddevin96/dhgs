@@ -13,6 +13,7 @@ class Hgraph extends Model
        
        'name',
        'category',
+       'url',
        'description',
        'nodes',
        'edges',

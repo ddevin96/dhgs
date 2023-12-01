@@ -88,6 +88,17 @@ class HgraphResource extends Resource
                     Tabs\Tab::make('Graph data')
                     ->schema([
                         Components\Section::make()
+                        ->key('section1')
+                        ->headerActions([
+                            Action::make('download')
+                                ->color('success')
+                                ->action(function ($record, Action $action) {
+                                    redirect()->to($record->url);
+                                })
+                                // ->action(function () {
+                                //     // ...
+                                // }),
+                        ])
                         ->schema([
                             Components\Grid::make(2)
                             ->schema([
@@ -106,6 +117,7 @@ class HgraphResource extends Resource
                            
                             ])]),
                         Components\Section::make()
+                            
                             ->schema([
                                 Components\Grid::make(2)
                                 ->schema([
