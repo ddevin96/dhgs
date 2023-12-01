@@ -204,7 +204,17 @@ class HgraphResource extends Resource
             ->filters([
                 SelectFilter::make('category')
                 ->multiple()
-                ->options(Hgraph::query()->pluck('category')->unique()->mapWithKeys(fn ($category) => [$category => $category]))
+                ->options(function () {
+                    $categories = Hgraph::query()->select('category')->distinct()->get();
+                    $values = [];
+                    foreach ($categories as $product) {
+                        foreach(explode(',', $product->category) as $value) {
+                            $values[] = trim($value);
+                            }
+                    }
+                    $values = array_unique($values);
+                    return $values;
+                })
                 ->label('Hgraph Category')
                 ->searchable(),
                 Filter::make('nodes')

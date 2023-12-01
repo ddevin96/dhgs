@@ -57,12 +57,12 @@ class LatestHgraphs extends BaseWidget
     {
         return [
             Tables\Columns\TextColumn::make('updated_at')
-                ->label('Last updated')
+                ->label('Updated at')
                 ->dateTime()
                 ->sortable()
                 ->toggleable(),
             Tables\Columns\TextColumn::make('created_at')
-                ->label('Last updated')
+                ->label('Created at')
                 ->dateTime()
                 ->sortable()
                 ->toggleable(),
