@@ -11,21 +11,33 @@ use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Infolists\Components;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Tabs;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\Split;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Infolists\Components\Actions;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\HgraphResource\Pages;
 use Filament\Infolists\Components\Actions\Action;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\HgraphResource\Pages\EditHgraph;
+use App\Filament\Resources\HgraphResource\Pages\ViewHgraph;
 use App\Filament\Resources\HgraphResource\RelationManagers;
-use Filament\Infolists\Components\Actions;
+use App\Filament\Resources\HgraphResource\Pages\ListHgraphs;
+use App\Filament\Resources\HgraphResource\Pages\CreateHgraph;
 
 class HgraphResource extends Resource
 {
@@ -173,7 +185,37 @@ class HgraphResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('category')
+                ->multiple()
+                ->options(Hgraph::query()->pluck('category')->unique()->mapWithKeys(fn ($category) => [$category => $category]))
+                ->label('Hgraph Category')
+                ->searchable(),
+                Filter::make('nodes')
+                ->form([
+                    TextInput::make('nodes2')
+                    ->numeric()
+                    ->label('Min # Nodes'),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when(
+                            $data['nodes2'],
+                            fn (Builder $query, $n): Builder => $query->where('nodes', '>=', $n),
+                        );
+                }),
+                Filter::make('edges')
+                ->form([
+                    TextInput::make('edges2')
+                    ->numeric()
+                    ->label('Min # Edges'),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when(
+                            $data['edges2'],
+                            fn (Builder $query, $n): Builder => $query->where('edges', '>=', $n),
+                        );
+                })
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
