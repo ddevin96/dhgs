@@ -56,6 +56,16 @@ class LatestHgraphs extends BaseWidget
     protected function getTableColumns(): array
     {
         return [
+            Tables\Columns\TextColumn::make('updated_at')
+                ->label('Last updated')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(),
+            Tables\Columns\TextColumn::make('created_at')
+                ->label('Last updated')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(),
             Tables\Columns\TextColumn::make('name')
             ->searchable(),
             Tables\Columns\TextColumn::make('category')
@@ -63,33 +73,29 @@ class LatestHgraphs extends BaseWidget
                 ->separator(',')
                 ->searchable(),
             Tables\Columns\TextColumn::make('nodes')
+                ->label('# Nodes')
                 ->numeric()
                 ->searchable()
                 ->sortable(),
             Tables\Columns\TextColumn::make('edges')
                 ->numeric()
+                ->label('# Edges')
                 ->sortable(),
             Tables\Columns\TextColumn::make('dnodemax')
                 ->numeric()
+                ->toggleable(isToggledHiddenByDefault: true)
                 ->label('Degree Node Max')
                 ->sortable(),
             Tables\Columns\TextColumn::make('dedgemax')
                 ->numeric()
-                ->sortable(),
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             Tables\Columns\TextColumn::make('dnodeavg')
                 ->numeric()
-                ->sortable(),
+                ->sortable() ->toggleable(isToggledHiddenByDefault: true),
             Tables\Columns\TextColumn::make('dedgeavg')
                 ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                ->sortable() ->toggleable(isToggledHiddenByDefault: true)
         ];
     }
 

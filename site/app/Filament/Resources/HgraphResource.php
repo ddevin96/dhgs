@@ -29,6 +29,11 @@ class HgraphResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static ?string $navigationLabel = 'Hypergraphs';
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -160,10 +165,12 @@ class HgraphResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nodes')
                     ->numeric()
+                    ->label('# Nodes')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('edges')
                     ->numeric()
+                    ->label('# Edges')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('dnodemax')
@@ -227,7 +234,7 @@ class HgraphResource extends Resource
             ])
             ->actions([
                 ViewAction::make(),
-                EditAction::make(),
+               // EditAction::make(),
                 Tables\Actions\Action::make('download')
                                 ->label('Download')
                                 ->icon('heroicon-o-arrow-down-tray')
@@ -255,7 +262,7 @@ class HgraphResource extends Resource
         return [
             'index' => Pages\ListHgraphs::route('/'),
             'create' => Pages\CreateHgraph::route('/create'),
-            'edit' => Pages\EditHgraph::route('/{record}/edit'),
+            //'edit' => Pages\EditHgraph::route('/{record}/edit'),
             'view' => Pages\ViewHgraph::route('/{record}'),
         ];
     }
